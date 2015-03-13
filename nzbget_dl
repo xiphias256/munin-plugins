@@ -1,0 +1,68 @@
+#!/bin/sh
+# -*- sh -*-
+
+: << =cut
+
+=head1 NAME
+
+nzbget_dl - Plugin to measure download speed from NZBGet
+
+=head1 NOTES
+
+ 0.1 ALPHA VERION
+
+=head1 AUTHOR
+
+Contributed by picard@fr32k.de
+
+=head1 LICENSE
+
+GPLv3 https://www.gnu.org/licenses/gpl.txt
+
+=head1 MAGIC MARKERS
+
+ #%# family=auto
+ #%# capabilities=autoconf
+
+=cut
+
+. $MUNIN_LIBDIR/plugins/plugin.sh
+
+NZBGETBIN=${nzbget:-/usr/bin/nzbget}
+GREPBIN=${grep:-/usr/bin/grep}
+CUTBIN=${cut:-/usr/bin/cut}
+
+if [ ! -x $NZBGETBIN ] ; then
+        printf "no ($NZBGETBIN: not found or not executable)"
+        exit 1
+fi
+
+if [ ! -x $GREPBIN ] ; then
+        printf "no ($GREPBIN: not found or not executable)"
+        exit 1
+fi
+
+if [ ! -x $CUTBIN ] ; then
+        printf "no ($CUTBIN: not found or not executable)"
+        exit 1
+fi
+
+if [ "$1" = "autoconf" ]; then
+        printf yes
+        exit 0
+fi
+
+if [ "$1" = "config" ]; then
+
+        printf "graph_title NZBGet download\n"
+        printf "graph_vlabel download KB/s\n"
+        printf "graph_scale no\n"
+        printf "graph_category services\n"
+        printf "graph_info The NZBGet download of the machine\n"
+        printf "nzbget_dl.info Current download rate\n"
+        printf "nzbget_dl.label download\n"
+        exit 0
+fi
+
+printf "nzbget_dl.value "
+$NZBGETBIN -L S | $GREPBIN 'Current download rate:' | $CUTBIN -d' ' -f4
