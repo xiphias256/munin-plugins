@@ -1,5 +1,4 @@
 # munin-plugins
-munin-plugins
 Für Munin gibt es eine Reihe von clientseitigen Plugins,
 die es möglich machen, verschiedene Dienste eines Servers (z.B. Datenbanken, CPU-Last, Mails, Sensoren, Netzwerk etc.) zu überwachen.
 Diese Plugins werden von einem Daemon gestartet, der Anfragen des Munin-Masters über eine Netzwerkverbindung entgegennimmt.
