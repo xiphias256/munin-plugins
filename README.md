@@ -7,3 +7,5 @@ Während der Daemon mit privilegierten Rechten (root) läuft, sorgt die Konfigur
 Die Entwicklung eigener Plugins ist mit grundlegenden Programmier-Kenntnissen möglich.
 
 Die Plugins die du hier findest sind von mir entwickelt oder gefundene erweitert / umgeschrieben.
+
+![Alt text](http://nzbget.net/forum/download/file.php?id=413&mode=view "Munin-plugin nzbget_dl")
