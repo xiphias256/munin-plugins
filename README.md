@@ -8,4 +8,4 @@ Die Entwicklung eigener Plugins ist mit grundlegenden Programmier-Kenntnissen m√
 
 Die Plugins die du hier findest sind von mir entwickelt oder gefundene erweitert / umgeschrieben.
 
-![Alt text](http://nzbget.net/forum/download/file.php?id=413&mode=view "Munin-plugin nzbget_dl")
+![nzbget_dl](http://nzbget.net/forum/download/file.php?id=413&mode=view "Munin-plugin nzbget_dl")
