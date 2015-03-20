@@ -116,12 +116,13 @@ config)
   fi
   if [ "$DIRECTION" == "uptime" ]; then
     printf "graph_title Cisco EPC3212 Uptime\n"
+    printf "graph_args --base 1000 -l 0\n"
     printf "graph_scale no\n"
+    printf "graph_vlabel uptime in days\n"
     printf "graph_category xmodem\n"
-    printf "graph_vlabel Uptime in Second\n"
     printf "graph_info Uptime from Cisco EPC3212 modem,scraped from its statuspage (http://192.168.100.1)\n"
-    printf "uptime_2_up.label second\n"
-    printf "uptime_2_up.draw AREA\n"
+    printf "uptime.draw AREA\n"
+    printf "uptime.label uptime\n"
     exit 0
   fi
   ;;
@@ -147,7 +148,7 @@ PWR_ARRAY=( 0 $(awk -F'[<>]' '/ ch_pwr/{print $3}' "$FILENAME") )
 UP_PWR_ARRAY=( 0 $(awk -F'[<>]' '/ up_pwr/{print $3}' "$FILENAME") )
 
 # uptime
-UPTIME_ARRAY=( 0 $(awk -F'[<>]' '/vtimelastrs/{print int($3*86400) + int($7*3600) + int(substr($11,2)*60) + substr($15,2)}' "$FILENAME2") )
+UPTIME_ARRAY=( $(awk -F'[<>]' '/vtimelastrs/{print ($3*86400 + $7*3600 + substr($11,2)*60 + substr($15,2))/86400}' "$FILENAME2") )
 
 #
 # Downstream info - Modem outputs both Power Levels and Signal to Noise Ratio
@@ -186,12 +187,4 @@ fi
 #
 # Uptime info - Modem Time Since Last Reset:
 #
-
-if [ "$DIRECTION" == "uptime" ]; then
-  total=${#UPTIME_ARRAY[*]}
-  for (( index=1; index<$(( $total )); index++ ))
-  do
-    printf "uptime_%d_up.value %s\n" $index ${UPTIME_ARRAY[$index]}
-  done
-  exit 0
-fi
+printf "uptime.value %.2f\n" ${UPTIME_ARRAY[1]}
